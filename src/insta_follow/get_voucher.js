@@ -46,9 +46,9 @@ export async function getVoucher(username, from) {
                     data: 
 `Hi, Selamat Siang ${responseInfo.data.data.full_name}
 
-Sistem Kami sudah membaca bahwa kamu sudah Follow Akun Instagram @lumajang_kab,
+Sistem Kami sudah membaca bahwa kamu sudah Follow Akun Instagram @${process.env.INSTA_UNAME_CLIENT},
 
-Berikut Login dan Password yang bisa kamu gunakan untuk mengakses Wifi Corner Pemkab Lumajang :
+Berikut Login dan Password yang bisa kamu gunakan untuk mengakses Wifi Corner ${process.env.CLIENT_NAME} :
 
 User : Username
 Password : xxxxxx`,
@@ -62,13 +62,13 @@ Password : xxxxxx`,
                     data: 
 `Hi, Selamat Siang ${responseInfo.data.data.full_name}
 
-Sistem Kami membaca bahwa kamu belum Follow Akun Instagram @lumajang_kab,
+Sistem Kami membaca bahwa kamu belum Follow Akun Instagram @${process.env.INSTA_UNAME_CLIENT},
 
-Silahkan Follow Akun Instagram Kami untuk mendapatkan Akses *GRATIS* ke WiFi Corner Pemkab Lumajang.
+Silahkan Follow Akun Instagram Kami untuk mendapatkan Akses *GRATIS* ke WiFi Corner ${process.env.CLIENT_NAME}.
 
-Dapatkan Info Terkini via Whatsapp dari Pemkab Lumajang dengan menggunakan WiFi Corner Pemkab Lumajang. 
+Dapatkan Info Terkini via Whatsapp dari ${process.env.CLIENT_NAME} dengan menggunakan WiFi Corner ${process.env.CLIENT_NAME}. 
 
-https://www.instagram.com/lumajang_kab
+https://www.instagram.com/${process.env.INSTA_UNAME_CLIENT}
 
 Terimakasih`,
 

@@ -94,7 +94,7 @@ client.on('ready', () => {
 
 client.on('message', async (msg) => {
     try {
-        if(msg.body.toLowerCase().startsWith('voucer#')){
+        if(msg.body.toLowerCase().startsWith('lumajang#')){
             const splittedMsg = msg.body.split("#"); //this Proccess Request Order by Splitting Messages
 
             if(splittedMsg[1].toLowerCase().includes('https://www.instagram.com/')){

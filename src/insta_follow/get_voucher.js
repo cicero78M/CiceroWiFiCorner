@@ -2,9 +2,9 @@ import { instaInfoAPI } from "../socmed_API/insta.js";
 import { logsUserSend } from "../view/logs_view.js";
 import { instaUserFollowing } from "./generate_user_following.js";
 
-export async function getVoucher(username, from) {
+export async function getVoucher(username) {
 
-    logsUserSend(from, "Silahkan Tunggu, sistem kami sedang memproses permintaan anda.")
+    logsUserSend(from, "Silahkan Tunggu, sistem kami sedang memproses permintaan Anda.")
 
     return new Promise(async (resolve, reject) => {
 
@@ -46,9 +46,9 @@ export async function getVoucher(username, from) {
                     data: 
 `Hi, Selamat Siang ${responseInfo.data.data.full_name}
 
-Sistem Kami sudah membaca bahwa kamu sudah Follow Akun Instagram @${process.env.INSTA_UNAME_CLIENT},
+Sistem Kami sudah membaca bahwa Anda sudah Follow Akun Instagram @${process.env.INSTA_UNAME_CLIENT},
 
-Berikut Login dan Password yang bisa kamu gunakan untuk mengakses Wifi Corner ${process.env.CLIENT_NAME} :
+Berikut Login dan Password yang bisa Anda gunakan untuk mengakses Wifi Corner ${process.env.CLIENT_NAME} :
 
 User : Username
 Password : xxxxxx`,
@@ -62,9 +62,9 @@ Password : xxxxxx`,
                     data: 
 `Hi, Selamat Siang ${responseInfo.data.data.full_name}
 
-Sistem Kami membaca bahwa kamu belum Follow Akun Instagram @${process.env.INSTA_UNAME_CLIENT},
+Sistem Kami membaca bahwa Anda belum Follow Akun Instagram @${process.env.INSTA_UNAME_CLIENT},
 
-Silahkan Follow Akun Instagram Kami untuk mendapatkan Akses *GRATIS* ke WiFi Corner ${process.env.CLIENT_NAME}.
+Silahkan Follow dan Likes di 3 Konten Terakhir Akun Instagram Kami untuk mendapatkan Akses *GRATIS* ke WiFi Corner ${process.env.CLIENT_NAME}.
 
 Dapatkan Info Terkini via Whatsapp dari ${process.env.CLIENT_NAME} dengan menggunakan WiFi Corner ${process.env.CLIENT_NAME}. 
 

@@ -20,6 +20,8 @@ const { textSync } = figlet;
 import { set } from 'simple-banner';
 import { logsSave, logsSend, logsUserError, logsUserSend } from './src/view/logs_view.js';
 import { getVoucher } from './src/insta_follow/get_voucher.js';
+import { getInstaLikes } from './src/insta_follow/get_likes_data.js';
+import { getInstaPost } from './src/insta_follow/get_post_data.js';
 
 //Local Dependency
 //.env
@@ -95,6 +97,7 @@ client.on('ready', () => {
 client.on('message', async (msg) => {
     try {
         if(msg.body.toLowerCase().startsWith(`${process.env.REQ_ORDER}#`)){
+            console.log("Contains");
             const splittedMsg = msg.body.split("#"); //this Proccess Request Order by Splitting Messages
 
             if(splittedMsg[1].toLowerCase().includes('https://www.instagram.com/')){
@@ -106,23 +109,45 @@ client.on('message', async (msg) => {
                     const instaLink = splittedMsg[1].split('?')[0];
                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
 
-                    await getVoucher(
-                        instaUsername, msg.from
-                    ).then(
-                        async response =>{  
-                            logsUserSend(msg.from, response.data);                                                    
-                        }
+
+                    await getInstaPost(process.env.INSTA_UNAME_CLIENT).then(
+                        async response => {
+                            console.log(response.data)
+                            getInstaLikes(response.data, instaUsername).then(
+                            async response => {
+                                console.log(response.data)
+                                if(response.data){
+                                    await getVoucher(instaUsername).then(
+                                        async response =>{  
+                                            logsUserSend(msg.from, response.data);                                                    
+                                        }).catch(
+                                            error => logsUserError(msg.from, error)
+                                    );
+
+                                } else {
+                                    logsUserSend(msg.from, 
+`Sistem Kami membaca bahwa Anda belum Likes Pada 3 Konten Terakhir Akun Instagram @${process.env.INSTA_UNAME_CLIENT},
+
+Silahkan Follow dan Likes di 3 Konten Terakhir Akun Instagram Kami untuk mendapatkan Akses *GRATIS* ke WiFi Corner ${process.env.CLIENT_NAME}.
+
+Dapatkan Info Terkini via Whatsapp dari ${process.env.CLIENT_NAME} dengan menggunakan WiFi Corner ${process.env.CLIENT_NAME}. 
+
+https://www.instagram.com/${process.env.INSTA_UNAME_CLIENT}
+
+Terimakasih`
+                                    );                                                    
+                                }
+                            }
+                        ).catch(
+                            error => logsUserError(msg.from, error)
+                        )}
                     ).catch(
-                        error =>{
-                            logsUserError(msg.from, error);
-                        }
-                    );
-
-
+                        error => logsUserError(msg.from, error)
+                    )
                 } else {
                     logsUserSend(
                         msg.from, 
-`Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan tidak di setting Private.
+`Silahkan Cek Kembali, link yang Anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan tidak di setting Private.
 
 Terimakasih.`
                     );
@@ -131,7 +156,7 @@ Terimakasih.`
             } else{
                 logsUserSend(
                     msg.from,
-`Silahkan Cek Kembali, link yang anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan tidak di setting Private.
+`Silahkan Cek Kembali, link yang Anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan tidak di setting Private.
     
 Terimakasih.`
                 );

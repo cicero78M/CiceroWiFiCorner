@@ -1,6 +1,7 @@
 import { instaLikesAPI } from "../socmed_API/insta.js";
+import { logsUserSend } from "../view/logs_view.js";
 
-export async function getInstaLikes(todayItems, uname) {
+export async function getInstaLikes(todayItems, uname, from) {
     
     return new Promise(async (resolve, reject) => {
       
@@ -25,6 +26,18 @@ export async function getInstaLikes(todayItems, uname) {
 
                         likesChecker = false;
 
+                        logsUserSend(from,
+
+`Hi, ${uname}
+
+Sistem Kami membaca bahwa Anda belum melakukan Likes pada konten :
+
+https://instagram.com/p/${todayItems[i]}
+
+Silahkan likes pada 3 konten terakhir, dan kirim kembali pesan permintaan Voucer WiFi Corner.
+
+`
+                        );
                     } else {
                         console.log("Contains Uname")
                     }

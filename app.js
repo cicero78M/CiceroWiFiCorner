@@ -19,9 +19,9 @@ const { textSync } = figlet;
 //Banner
 import { set } from 'simple-banner';
 import { logsSave, logsSend, logsUserError, logsUserSend } from './src/view/logs_view.js';
-import { getVoucher } from './src/insta_follow/get_voucher.js';
 import { getInstaLikes } from './src/insta_follow/get_likes_data.js';
 import { getInstaPost } from './src/insta_follow/get_post_data.js';
+import { getVoucher } from './src/insta_follow/get_voucher.js';
 
 //Local Dependency
 //.env
@@ -113,30 +113,20 @@ client.on('message', async (msg) => {
                     await getInstaPost(process.env.INSTA_UNAME_CLIENT).then(
                         async response => {
                             console.log(response.data)
-                            getInstaLikes(response.data, instaUsername).then(
+                            getInstaLikes(response.data, instaUsername, msg.from).then(
                             async response => {
                                 console.log(response.data)
                                 if(response.data){
-                                    await getVoucher(instaUsername).then(
+                                    console.log("Get Voucher")
+
+                                    await getVoucher(instaUsername, msg.from).then(
                                         async response =>{  
                                             logsUserSend(msg.from, response.data);                                                    
                                         }).catch(
                                             error => logsUserError(msg.from, error)
                                     );
 
-                                } else {
-                                    logsUserSend(msg.from, 
-`Sistem Kami membaca bahwa Anda belum Likes Pada 3 Konten Terakhir Akun Instagram @${process.env.INSTA_UNAME_CLIENT},
-
-Silahkan Follow dan Likes di 3 Konten Terakhir Akun Instagram Kami untuk mendapatkan Akses *GRATIS* ke WiFi Corner ${process.env.CLIENT_NAME}.
-
-Dapatkan Info Terkini via Whatsapp dari ${process.env.CLIENT_NAME} dengan menggunakan WiFi Corner ${process.env.CLIENT_NAME}. 
-
-https://www.instagram.com/${process.env.INSTA_UNAME_CLIENT}
-
-Terimakasih`
-                                    );                                                    
-                                }
+                                } 
                             }
                         ).catch(
                             error => logsUserError(msg.from, error)

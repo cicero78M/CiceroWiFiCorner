@@ -1,19 +1,18 @@
 import { instaLikesAPI } from "../socmed_API/insta.js";
-import { logsUserSend } from "../view/logs_view.js";
 
-export async function getInstaLikes(todayItems, uname, from) {
+export async function getInstaLikes(todayItems, uname) {
     
     return new Promise(async (resolve, reject) => {
       
       try { 
-        let likesChecker = true;
+        let linkInsta = "";
+        let unlikesCounter = 0;
 
         for (let i=0; i < todayItems.length; i++){
             
             await instaLikesAPI(todayItems[i]).then(
                 async response =>{
 
-                    console.log(response);
                     let usernames = new Array;
       
                     const likesItems = await response.data.data.items;
@@ -24,34 +23,10 @@ export async function getInstaLikes(todayItems, uname, from) {
 
                     if (!usernames.includes(uname)){
 
-                        likesChecker = false;
+                        unlikesCounter++;
+                        linkInsta = linkInsta.concat(`https://instagram.com/p/${todayItems[i]}\n`);
 
-                        logsUserSend(from,
-
-`Hi, ${uname}
-
-Sistem Kami membaca bahwa Anda belum melakukan Likes pada konten :
-
-https://instagram.com/p/${todayItems[i]}
-
-Silahkan likes pada 3 konten terakhir, dan kirim kembali pesan permintaan Voucer WiFi Corner.
-
-`
-                        );
-                    } else {
-                        console.log("Contains Uname")
                     }
-
-                    if(!likesChecker){
-                        let data = {
-                            data: false,
-                            state: false,
-                            code: 200
-                        };
-                        
-                        resolve (data);
-                    }
-
                 } 
             ).catch(
                 async error =>{
@@ -68,16 +43,17 @@ Silahkan likes pada 3 konten terakhir, dan kirim kembali pesan permintaan Voucer
             
         }
 
+        let data = {
+            data: {
+                unlikesCounter : unlikesCounter,
+                linkInsta : linkInsta,
+            },
+            state: false,
+            code: 200
+        };
         
-        if(likesChecker){
-            let data = {
-                data: true,
-                state: false,
-                code: 200
-            };
-            
-            resolve (data);
-        }
+        resolve (data);
+        
 
       } catch (error) {
         let data = {

@@ -97,7 +97,6 @@ client.on('ready', () => {
 client.on('message', async (msg) => {
     try {
         if(msg.body.toLowerCase().startsWith(`${process.env.REQ_ORDER}#`)){
-            console.log("Contains");
             const splittedMsg = msg.body.split("#"); //this Proccess Request Order by Splitting Messages
 
             if(splittedMsg[1].toLowerCase().includes('https://www.instagram.com/')){
@@ -112,21 +111,29 @@ client.on('message', async (msg) => {
 
                     await getInstaPost(process.env.INSTA_UNAME_CLIENT).then(
                         async response => {
-                            console.log(response.data)
                             getInstaLikes(response.data, instaUsername, msg.from).then(
                             async response => {
                                 console.log(response.data)
-                                if(response.data){
-                                    console.log("Get Voucher")
-
+                                if(response.data.unlikesCounter === 0){
                                     await getVoucher(instaUsername, msg.from).then(
                                         async response =>{  
                                             logsUserSend(msg.from, response.data);                                                    
                                         }).catch(
                                             error => logsUserError(msg.from, error)
                                     );
+                                } else {
 
-                                } 
+                                    logsUserSend(msg.from, 
+`Sistem kami membaca Anda belum melakukan likes pada ${response.data.unlikesCounter} konten :
+    
+${response.data.linkInsta}
+Silahkan Likes Konten dan Ulangi Pesan Request Voucher WiFi Corner.
+
+Terimakasih
+`
+                                    );                                                    
+
+                                }
                             }
                         ).catch(
                             error => logsUserError(msg.from, error)

@@ -10,7 +10,7 @@ const { Client, LocalAuth } = wwebjs;
 import 'dotenv/config';
 
 //QR-Code
-import qrcode, { error } from 'qrcode-terminal';
+import qrcode from 'qrcode-terminal';
 
 //Figlet
 import figlet from 'figlet';
@@ -19,9 +19,9 @@ const { textSync } = figlet;
 //Banner
 import { set } from 'simple-banner';
 import { logsSave, logsSend, logsUserError, logsUserSend } from './src/view/logs_view.js';
-import { getInstaLikes } from './src/insta_follow/get_likes_data.js';
-import { getInstaPost } from './src/insta_follow/get_post_data.js';
-import { getVoucher } from './src/insta_follow/get_voucher.js';
+import { getInstaLikes } from './src/controller/get_likes_data.js';
+import { getInstaPost } from './src/controller/get_post_data.js';
+import { getVoucher } from './src/controller/get_voucher.js';
 
 //Local Dependency
 //.env
@@ -108,7 +108,6 @@ client.on('message', async (msg) => {
                     const instaLink = splittedMsg[1].split('?')[0];
                     const instaUsername = instaLink.replaceAll('/profilecard/','').split('/').pop();  
 
-
                     await getInstaPost(process.env.INSTA_UNAME_CLIENT).then(
                         async response => {
                             getInstaLikes(response.data, instaUsername, msg.from).then(
@@ -144,7 +143,7 @@ Terimakasih
                 } else {
                     logsUserSend(
                         msg.from, 
-`Silahkan Cek Kembali, link yang Anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan tidak di setting Private.
+`Silahkan Cek Kembali, link yang Anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan bukan akun Private.
 
 Terimakasih.`
                     );
@@ -153,7 +152,7 @@ Terimakasih.`
             } else{
                 logsUserSend(
                     msg.from,
-`Silahkan Cek Kembali, link yang Anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan tidak di setting Private.
+`Silahkan Cek Kembali, link yang Anda cantumkan, pastikan link tersebut adalah link akun profile Instagram Anda dan bukan akun Private.
     
 Terimakasih.`
                 );

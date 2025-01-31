@@ -1,4 +1,4 @@
-import { instaPostAPI } from "../socmed_API/insta.js";
+import { instaPostAPI } from "../module/insta.js";
 
 export async function getInstaPost(instaAccount) {
 

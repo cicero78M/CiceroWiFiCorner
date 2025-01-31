@@ -1,4 +1,4 @@
-import { instaInfoAPI } from "../socmed_API/insta.js";
+import { instaInfoAPI } from "../module/insta.js";
 import { logsUserSend } from "../view/logs_view.js";
 import { instaUserFollowing } from "./generate_user_following.js";
 

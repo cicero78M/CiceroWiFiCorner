@@ -1,4 +1,4 @@
-import { instaLikesAPI } from "../socmed_API/insta.js";
+import { instaLikesAPI } from "../module/insta.js";
 
 export async function getInstaLikes(todayItems, uname) {
     

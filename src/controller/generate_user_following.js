@@ -1,4 +1,4 @@
-import { instaFollowingAPI } from "../socmed_API/insta.js";
+import { instaFollowingAPI } from "../module/insta.js";
 import { logsSave } from "../view/logs_view.js";
 
 export async function instaUserFollowing(username, pages, countData, totalData) {

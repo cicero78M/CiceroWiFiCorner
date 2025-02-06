@@ -16,7 +16,8 @@ export async function getInstaPost(instaAccount) {
               if (!postItems[i].is_pinned){
 
                 lastCode.push(postItems[i].code);
-                if (lastCode.length > 1 && lastCode.length < 2){
+
+                if (lastCode.length === 2){
                   break;
                 }
               }

@@ -25,7 +25,8 @@ export async function getInstaLikes(todayItems, uname) {
 
                         unlikesCounter++;
                         linkInsta = linkInsta.concat(`
-https://instagram.com/p/${todayItems[i]}`);
+https://instagram.com/p/${todayItems[i]}
+`);
 
                     }
                 } 

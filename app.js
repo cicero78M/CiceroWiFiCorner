@@ -38,6 +38,7 @@ app.listen(port, () => {
 export const client = new Client({
     authStrategy: new LocalAuth({
         clientId: private_key.APP_SESSION_NAME,
+        executablePath: '/usr/bin/chromium-browser'
     }),
 });
 

@@ -12,7 +12,7 @@ export async function getInstaPost(instaAccount) {
         
             postItems = await response.data.data.items;
             
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < 2; i++) {
                 lastCode.push(postItems[i].code);
             }
 

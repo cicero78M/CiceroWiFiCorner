@@ -12,8 +12,14 @@ export async function getInstaPost(instaAccount) {
         
             postItems = await response.data.data.items;
             
-            for (let i = 0; i < 2; i++) {
+            for (let i = 0; i < postItems.length; i++) {
+              if (!postItems[i].is_pinned){
                 lastCode.push(postItems[i].code);
+
+                if (lastCode.length < 2){
+                  break;
+                }
+              }
             }
 
             let data = {

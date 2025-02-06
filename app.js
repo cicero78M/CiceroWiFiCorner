@@ -77,7 +77,7 @@ client.on('call', async (call) => {
 // On WWeb Ready
 client.on('ready', () => {
     //Banner
-    logsSave(textSync("CICERO -X- GONET", {
+    logsSave(textSync("CICERO WiFiCorner", {
         font: "Ghost",
         horizontalLayout: "fitted",
         verticalLayout: "default",
